@@ -1,6 +1,7 @@
 import config
 from log import logger
 import speech_recognizer_factory
+import speech_recorder_factory
 
 
 if __name__ == '__main__':
@@ -12,6 +13,16 @@ if __name__ == '__main__':
         conf = config.conf()
 
         logger.info('App start')
+
+        # Create speech recorder
+        speech_recorder = speech_recorder_factory.create_speech_recorder(conf.speech_recorder_type)
+
+        # Setup speech recorder
+        speech_recorder.setup()
+
+        # Record audio
+        speech_recorder.record(5)
+        # quit()
 
         # Create speech recognizer
         speech_recognizer = speech_recognizer_factory.create_speech_recognizer(conf.speech_recognizer_type)
