@@ -2,6 +2,7 @@ from speech_recognizer import SpeechRecognizer
 import os
 import config
 import openai
+from log import logger
 
 
 class WhisperSpeechRecognizer(SpeechRecognizer):
@@ -23,13 +24,20 @@ class WhisperSpeechRecognizer(SpeechRecognizer):
         """
         Translate audio to text.
         """
-        return "Hello world!"
+        try:
+            with open(audio, "rb") as f:
+                response = openai.Audio.transcribe("whisper-1", f)
+                text = response.text.strip()
+                return text
+        except FileNotFoundError:
+            logger.error(f'Audio file not found: {audio}')
+            raise
     
     def translate_text(self, text, source_lang, target_lang):
         """
         Translate text from source language to target language.
         """
-        # Call OpenAI
+        # Translate text
         response = openai.Completion.create(
             engine="text-davinci-002",
             prompt=f"Translate '{text}' from {source_lang} to {target_lang}:",

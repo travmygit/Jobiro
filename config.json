@@ -3,7 +3,7 @@
     "http_proxy": "http://127.0.0.1:7890",
     "https_proxy": "http://127.0.0.1:7890",
     "speech_recognizer_type": "whisper",
-    "audio_file": "test.wav",
+    "audio_file": "english_speech_sample.wav",
     "source_lang": "en",
     "target_lang": "zh"
 }
