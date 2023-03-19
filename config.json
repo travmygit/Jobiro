@@ -1,0 +1,9 @@
+{
+    "openai_api_key": "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",
+    "http_proxy": "http://127.0.0.1:7890",
+    "https_proxy": "http://127.0.0.1:7890",
+    "speech_recognizer_type": "whisper",
+    "audio_file": "test.wav",
+    "source_lang": "en",
+    "target_lang": "zh"
+}
