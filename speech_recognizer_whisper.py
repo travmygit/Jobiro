@@ -1,6 +1,6 @@
 from speech_recognizer import SpeechRecognizer
 import os
-import config
+from app_config import config
 import openai
 from log import logger
 
@@ -10,15 +10,12 @@ class WhisperSpeechRecognizer(SpeechRecognizer):
         """
         Setup the speech recognizer.
         """
-        # Get config
-        conf = config.conf()
-
         # Setup OpenAI
-        openai.api_key = conf.openai_api_key
+        openai.api_key = config.openai_api_key
 
         # Setup proxies
-        os.environ["http_proxy"] = conf.http_proxy
-        os.environ["https_proxy"] = conf.https_proxy
+        os.environ["http_proxy"] = config.http_proxy
+        os.environ["https_proxy"] = config.https_proxy
 
     def translate_audio(self, audio):
         """

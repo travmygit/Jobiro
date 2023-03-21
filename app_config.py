@@ -7,14 +7,16 @@ class Config:
         self.__dict__.update(kwargs)
 
 
-_config = None
+config = None
 
 
 def load_config():
-    global _config
+    global config
+    assert config is None, "The config has already been loaded"
     try:
-        with open('config.json', 'r') as f:
-            _config = json.load(f, object_hook=lambda d: Config(**d))
+        logger.info('Loading config')
+        with open('app_config.json', 'r') as f:
+            config = json.load(f, object_hook=lambda d: Config(**d))
     except FileNotFoundError:
         logger.error('Config file not found')
         raise
@@ -22,5 +24,10 @@ def load_config():
         logger.error('Config file is not a valid JSON file')
         raise
 
-def conf():
-    return _config
+def reload_config():
+    global config
+    config = None
+    load_config()
+
+
+load_config()

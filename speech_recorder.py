@@ -5,8 +5,8 @@ class SpeechRecorder:
         """
         raise NotImplementedError
     
-    def record(self, duration):
+    def record(self):
         """
-        Record audio for the specified duration.
+        Record audio.
         """
         raise NotImplementedError

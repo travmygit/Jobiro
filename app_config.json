@@ -1,8 +1,9 @@
 {
-    "openai_api_key": "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",
+    "openai_api_key": "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",
     "http_proxy": "http://127.0.0.1:7890",
     "https_proxy": "http://127.0.0.1:7890",
-    "speech_recorder_type": "sr",
+    "speech_recorder_type": "microphone",
+    "record_key": "k",
     "speech_recognizer_type": "whisper",
     "audio_file": "output.wav",
     "source_lang": "zh",
