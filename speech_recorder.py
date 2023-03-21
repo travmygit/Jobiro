@@ -10,3 +10,9 @@ class SpeechRecorder:
         Record audio.
         """
         raise NotImplementedError
+    
+    def stop(self):
+        """
+        Stop recording audio.
+        """
+        raise NotImplementedError
