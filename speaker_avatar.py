@@ -10,3 +10,9 @@ class SpeakerAvatar():
         Speak text.
         """
         raise NotImplementedError
+    
+    def shut(self):
+        """
+        Shut the speaker avatar.
+        """
+        raise NotImplementedError

@@ -6,10 +6,16 @@ class VoiceVoxSpeakerAvatar(SpeakerAvatar):
         """
         Setup the speaker avatar.
         """
-        raise NotImplementedError
+        pass
 
     def speak(self, text):
         """
         Speak text.
         """
-        raise NotImplementedError
+        pass
+
+    def shut(self):
+        """
+        Shut the speaker avatar.
+        """
+        pass

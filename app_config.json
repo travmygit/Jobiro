@@ -2,6 +2,7 @@
     "openai_api_key": "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",
     "http_proxy": "http://127.0.0.1:7890",
     "https_proxy": "http://127.0.0.1:7890",
+    "speaker_avatar_type": "voicevox",
     "speech_recorder_type": "microphone",
     "record_key": "k",
     "speech_recognizer_type": "whisper",

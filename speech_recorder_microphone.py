@@ -1,7 +1,7 @@
 from speech_recorder import SpeechRecorder
 import pyaudio
 import wave
-import threading
+from log import logger
 
 
 class MicrophoneSpeechRecorder(SpeechRecorder):
@@ -38,14 +38,16 @@ class MicrophoneSpeechRecorder(SpeechRecorder):
         self.audio = None
         self.stream = None
         self.frames = []
-        self.thread_stop = None
+
+    def stream_callback(self, in_data, frame_count, time_info, status):
+        self.frames.append(in_data)
+        return None, self.pyaudio_module.paContinue
 
     def record(self):
         """
         Record audio.
         """
         assert self.stream is None, "This speech recorder is already recording!"
-        assert self.thread_stop is None, "This speech recorder is already recording!"
         self.frames = []
         self.audio = self.pyaudio_module.PyAudio()
         try:
@@ -56,45 +58,34 @@ class MicrophoneSpeechRecorder(SpeechRecorder):
                 rate=self.SAMPLE_RATE,
                 input=True,
                 frames_per_buffer=self.CHUNK,
+                stream_callback=self.stream_callback
             )
         except Exception:
             self.audio.terminate()
             raise
 
-        running = [True]
-
-        def thread_listen():
-            while running[0]:
-                self.frames.append(self.stream.read(self.CHUNK))
-        
-        def thread_stop():
-            running[0] = False
-
-        thread = threading.Thread(target=thread_listen)
-        thread.start()
-        self.thread_stop = thread_stop
-            
     def stop(self, audio_file=None):
         """
         Stop recording audio.
         """
         try:
-            self.thread_stop()
+            wave_data = b''.join(self.frames)
+
             self.stream.stop_stream()
             self.stream.close()
 
-            if not self.frames:
+            if not wave_data:
                 return
 
             # Save the recorded data as a WAV file
             if audio_file:
-                wf = wave.open(audio_file, 'wb')
-                wf.setnchannels(self.CHANNELS)
-                wf.setsampwidth(self.audio.get_sample_size(self.FORMAT))
-                wf.setframerate(self.SAMPLE_RATE)
-                wf.writeframes(b''.join(self.frames))
-                wf.close()
+                with wave.open(audio_file, 'wb') as wave_file:
+                    wave_file.setnchannels(self.CHANNELS)
+                    wave_file.setsampwidth(self.SAMPLE_WIDTH)
+                    wave_file.setframerate(self.SAMPLE_RATE)
+                    wave_file.writeframes(wave_data)
+                    logger.info('Saving recorded audio to file: %s', audio_file)
         finally:
-            self.stream = None
-            self.thread_stop = None
             self.audio.terminate()
+            self.audio = None
+            self.stream = None

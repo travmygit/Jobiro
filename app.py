@@ -1,22 +1,23 @@
 from app_config import config
 from log import logger
 import keyboard
+import speaker_avatar_factory
 import speech_recognizer_factory
 import speech_recorder_factory
 
 
 is_recording = False
-is_running = True
 
 
 def on_record_start(_):
     """
     Start recording audio.
     """
-    global is_recording, speech_recorder
+    global is_recording, hint_speaker, speech_recorder
 
     if not is_recording:
         is_recording = True
+        hint_speaker.speak('Recording')
         speech_recorder.record()
 
 
@@ -24,15 +25,27 @@ def on_record_stop(_):
     """
     Stop recording audio.
     """
-    global is_recording, speech_recorder
+    global is_recording, hint_speaker, speech_recorder
 
     if is_recording:
         is_recording = False
-        speech_recorder.stop()
+        speech_recorder.stop(config.audio_file)
 
 
 if __name__ == '__main__':
     try:
+        # Create speaker avatar
+        speaker_avatar = speaker_avatar_factory.create_speaker_avatar(config.speaker_avatar_type)
+
+        # Setup speaker avatar
+        speaker_avatar.setup()
+
+        # Create hint speaker for debugging
+        hint_speaker = speaker_avatar_factory.create_speaker_avatar('hint')
+
+        # Setup hint speaker
+        hint_speaker.setup()
+
         # Create speech recorder
         speech_recorder = speech_recorder_factory.create_speech_recorder(config.speech_recorder_type)
 
