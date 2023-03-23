@@ -84,7 +84,7 @@ class MicrophoneSpeechRecorder(SpeechRecorder):
                     wave_file.setsampwidth(self.SAMPLE_WIDTH)
                     wave_file.setframerate(self.SAMPLE_RATE)
                     wave_file.writeframes(wave_data)
-                    logger.info('Saving recorded audio to file: %s', audio_file)
+                    # logger.info('Saving recorded audio to file: %s', audio_file)
         finally:
             self.audio.terminate()
             self.audio = None

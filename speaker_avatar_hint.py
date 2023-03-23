@@ -1,7 +1,6 @@
 from speaker_avatar import SpeakerAvatar
 import pyaudio
 import wave
-import threading
 
 
 class HintSpeakerAvatar(SpeakerAvatar):
