@@ -26,7 +26,7 @@ def on_record_stop(_):
     """
     Stop recording audio.
     """
-    global is_recording, hint_speaker, speech_recorder, speech_recognizer
+    global is_recording, speaker_avatar, speech_recorder, speech_recognizer
 
     if is_recording:
         is_recording = False
@@ -43,6 +43,9 @@ def on_record_stop(_):
 
         # Log translated text
         logger.info(f'Translated text: {translated_text}')
+
+        # Speak translated text
+        speaker_avatar.speak(translated_text)
 
 
 if __name__ == '__main__':
@@ -71,14 +74,13 @@ if __name__ == '__main__':
         # Setup speech recognizer
         speech_recognizer.setup()
 
+        # Start app
         keyboard.on_press_key(config.record_key, on_record_start)
         keyboard.on_release_key(config.record_key, on_record_stop)
-
         logger.info('App start')
-
         keyboard.wait('esc')
-
         logger.info('App end')
+        
     except Exception as e:
         logger.error('App start failed')
         logger.exception(e)

@@ -1,4 +1,5 @@
 from speaker_avatar import SpeakerAvatar
+from log import logger
 
 
 class VoiceVoxSpeakerAvatar(SpeakerAvatar):
@@ -12,7 +13,7 @@ class VoiceVoxSpeakerAvatar(SpeakerAvatar):
         """
         Speak text.
         """
-        pass
+        logger.info(f'Speaking text: {text}')
 
     def shut(self):
         """
