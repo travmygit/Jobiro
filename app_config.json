@@ -8,5 +8,6 @@
     "speech_recognizer_type": "whisper",
     "source_lang": "zh",
     "target_lang": "en",
-    "audio_file": "temp/output.wav"
+    "speech_to_text_audio": "temp/speech_to_text.wav",
+    "text_to_speech_audio": "temp/text_to_speech.wav"
 }

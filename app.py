@@ -30,10 +30,10 @@ def on_record_stop(_):
 
     if is_recording:
         is_recording = False
-        speech_recorder.stop(config.audio_file)
+        speech_recorder.stop(config.speech_to_text_audio)
 
         # Translate audio to text
-        text = speech_recognizer.translate_audio(config.audio_file)
+        text = speech_recognizer.translate_audio(config.speech_to_text_audio)
 
         # Log text
         logger.info(f'Text: {text}' if text else 'No text found')
@@ -80,7 +80,7 @@ if __name__ == '__main__':
         logger.info('App start')
         keyboard.wait('esc')
         logger.info('App end')
-        
+
     except Exception as e:
         logger.error('App start failed')
         logger.exception(e)
