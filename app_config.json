@@ -1,5 +1,5 @@
 {
-    "openai_api_key": "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",
+    "openai_api_key": "",
     "http_proxy": "http://127.0.0.1:7890",
     "https_proxy": "http://127.0.0.1:7890",
     "speaker_avatar_type": "voicevox",
